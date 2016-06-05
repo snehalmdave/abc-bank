@@ -7,7 +7,7 @@ public class Bank {
     private List<Customer> customers;
 
     public Bank() {
-        customers = new ArrayList<Customer>();
+        customers =  new ArrayList<Customer>();
     }
 
     public void addCustomer(Customer customer) {
@@ -15,10 +15,12 @@ public class Bank {
     }
 
     public String customerSummary() {
-        String summary = "Customer Summary";
-        for (Customer c : customers)
-            summary += "\n - " + c.getName() + " (" + format(c.getNumberOfAccounts(), "account") + ")";
-        return summary;
+        StringBuilder summary = new StringBuilder("Customer Summary");
+        for (Customer c : customers){
+        	summary.append("\n - ").append(c.getName()).append(" (").append(format(c.getNumberOfAccounts(), "account") ).append(")");
+        }
+           // summary += "\n - " + c.getName() + " (" + format(c.getNumberOfAccounts(), "account") + ")";
+        return summary.toString();
     }
 
     //Make sure correct plural of word is created based on the number passed in:
@@ -27,10 +29,11 @@ public class Bank {
         return number + " " + (number == 1 ? word : word + "s");
     }
 
-    public double totalInterestPaid() {
-        double total = 0;
-        for(Customer c: customers)
-            total += c.totalInterestEarned();
+    public Currency totalInterestPaid() {
+    	Currency total=new Currency(0d);
+    	for(Customer c: customers){
+    		total.plus(c.totalInterestEarned());
+    	}
         return total;
     }
 
